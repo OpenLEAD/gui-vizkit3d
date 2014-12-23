@@ -15,6 +15,7 @@ rock_library(vizkit3d
         OsgVisitors.cpp
         TransformerGraph.cpp
         CoordinateFrame.cpp
+        DefaultManipulator.cpp
         EnableGLDebugOperation.cpp
         ${PROPERTY_BROWSER_RESOURCES} 
     MOC
@@ -46,6 +47,7 @@ rock_library(vizkit3d
         PickHandler.hpp
         ColorConversionHelper.hpp
         CoordinateFrame.hpp
+        DefaultManipulator.hpp
         ${HEADERS_EXTRA}
     LIBS ${Boost_THREAD_LIBRARY} ${Boost_SYSTEM_LIBRARY}
     DEPS_PKGCONFIG openscenegraph openscenegraph-osgQt ${DEPS_EXTRA})
