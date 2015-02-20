@@ -11,6 +11,8 @@
 namespace osgQt { class GraphicsWindowQt;}
 namespace vizkit3d
 {
+    class EnvPluginBase;
+
     // configuration class
     class Vizkit3DConfig :public QObject
     {
@@ -129,6 +131,25 @@ namespace vizkit3d
             QObject* loadPlugin(QString lib_name,QString plugin_name);
             QStringList* getAvailablePlugins();
 
+            /** This sets one of the plugins to be the environment-rendering
+             * plugin
+             *
+             * The plugin object needs to be a subclass of EnvPluginBase. It
+             * will be automatically added if it is not already.
+             *
+             * The environment rendering can be enabled/disabled normally using
+             * setPluginEnabled
+             */
+            void setEnvironmentPlugin(QObject* plugin);
+
+            /** Removes the current environment plugin
+             *
+             * This removes the environment-rendering role of the plugin
+             * currently set by setEnvironmentPlugin. Note that it does not
+             * remove the plugin itself
+             */
+            void clearEnvironmentPlugin();
+
         signals:
             void addPlugins(QObject* plugin,QObject* parent);
             void removePlugins(QObject* plugin);
@@ -146,6 +167,10 @@ namespace vizkit3d
             void addProperties(QObject* plugin,QObject *parent=NULL);
 
         private:
+            // Helper method for setPluginEnabled
+            void enableEnvironmentPlugin();
+            // Helper method for setPluginEnabled
+            void disableEnvironmentPlugin();
             void changeCameraView(const osg::Vec3* lookAtPos, const osg::Vec3* eyePos, const osg::Vec3* upVector);
             void setPluginEnabled(QObject* plugin, bool enabled);
             QObject* loadLib(QString file_path);
@@ -162,6 +187,9 @@ namespace vizkit3d
         private:
             //holds the scene
             osg::ref_ptr<osg::Group> root;
+
+            //the plugin currently used as environment plugin
+            EnvPluginBase* env_plugin;
 
             /** The set of known plugins, as a mapping from the plugin to the osg::Node
              * to which it should be attached.
