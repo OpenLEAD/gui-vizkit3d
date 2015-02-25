@@ -374,6 +374,9 @@ void Vizkit3DWidget::deregisterDataHandler(VizPluginBase* viz)
 
 void Vizkit3DWidget::enableDataHandler(VizPluginBase *viz)
 {
+    if (viz == env_plugin)
+        throw std::invalid_argument("attempted to enable the environment plugin");
+
     PluginMap::iterator it = plugins.find(viz);
     if (it != plugins.end())
         it->second->addChild(viz->getRootNode());
@@ -683,7 +686,7 @@ void Vizkit3DWidget::setPluginDataFrameIntern(const QString& frame, QObject* plu
     PluginMap::iterator it = plugins.find(viz);
     if (it != plugins.end())
     {
-        if(viz->isPluginEnabled())
+        if(viz != env_plugin && viz->isPluginEnabled())
         {
             disableDataHandler(viz);
             it->second = node;
