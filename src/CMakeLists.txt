@@ -48,6 +48,7 @@ rock_library(vizkit3d
         ColorConversionHelper.hpp
         CoordinateFrame.hpp
         DefaultManipulator.hpp
+        EnvPluginBase.hpp
         ${HEADERS_EXTRA}
     LIBS ${Boost_THREAD_LIBRARY} ${Boost_SYSTEM_LIBRARY}
     DEPS_PKGCONFIG openscenegraph openscenegraph-osgQt ${DEPS_EXTRA})
